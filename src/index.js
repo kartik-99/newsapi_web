@@ -1,17 +1,38 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import Navbar from "./navbar";
+import MasterDrawer from "./drawer";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+class Root extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            drawerOpen: true,
+        };
+    }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+    toggleDrawer() {
+        this.setState({
+            drawerOpen: !this.state.drawerOpen,
+        });
+    }
+    closeDrawer() {
+        this.setState({
+            drawerOpen: false,
+        });
+    }
+    render() {
+        return (
+            <Router>
+                <Navbar onClick={() => this.toggleDrawer()} />
+                <MasterDrawer
+                    open={this.state.drawerOpen}
+                    onClick={() => this.closeDrawer()}
+                />
+            </Router>
+        );
+    }
+}
+
+ReactDOM.render(<Root />, document.getElementById("root"));
