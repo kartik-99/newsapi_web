@@ -16,6 +16,7 @@ import RssFeedIcon from "@material-ui/icons/RssFeed"; // sources
 import NotificationImportantIcon from "@material-ui/icons/NotificationImportant"; // search top headlines
 import AllInclusiveIcon from "@material-ui/icons/AllInclusive"; // all search
 import StarsIcon from "@material-ui/icons/Stars"; // fav sources
+import { NavLink } from "react-router-dom";
 
 export default function MasterDrawer(props) {
     const classes = useStyles();
@@ -38,13 +39,24 @@ export default function MasterDrawer(props) {
                 <div className={classes.drawerContainer}>
                     <List>
                         <ListSubheader>News Items</ListSubheader>
-                        <ListItem>
+                        <ListItem
+                            component={NavLink}
+                            to="/feed"
+                            color="black"
+                            activeClassName="Mui-selected"
+                            onClick={props.onClick}
+                        >
                             <ListItemIcon>
                                 <ClearAllIcon />
                             </ListItemIcon>
                             <ListItemText primary="Feed" />
                         </ListItem>
-                        <ListItem>
+                        <ListItem
+                            component={NavLink}
+                            to="/bookmarks"
+                            activeClassName="Mui-selected"
+                            onClick={props.onClick}
+                        >
                             <ListItemIcon>
                                 <BookmarksIcon />
                             </ListItemIcon>
@@ -55,13 +67,23 @@ export default function MasterDrawer(props) {
                     <Divider />
                     <List>
                         <ListSubheader>Search</ListSubheader>
-                        <ListItem>
+                        <ListItem
+                            component={NavLink}
+                            to="/search/top"
+                            activeClassName="Mui-selected"
+                            onClick={props.onClick}
+                        >
                             <ListItemIcon>
                                 <NotificationImportantIcon />
                             </ListItemIcon>
                             <ListItemText primary="Latest Headlines" />
                         </ListItem>
-                        <ListItem>
+                        <ListItem
+                            component={NavLink}
+                            to="/search/all"
+                            activeClassName="Mui-selected"
+                            onClick={props.onClick}
+                        >
                             <ListItemIcon>
                                 <AllInclusiveIcon />
                             </ListItemIcon>
@@ -71,13 +93,23 @@ export default function MasterDrawer(props) {
                     <Divider />
                     <List>
                         <ListSubheader>News Channels</ListSubheader>
-                        <ListItem>
+                        <ListItem
+                            component={NavLink}
+                            to="/sources"
+                            activeClassName="Mui-selected"
+                            onClick={props.onClick}
+                        >
                             <ListItemIcon>
                                 <RssFeedIcon />
                             </ListItemIcon>
                             <ListItemText primary="All Sources" />
                         </ListItem>
-                        <ListItem>
+                        <ListItem
+                            component={NavLink}
+                            to="/sources/favourites"
+                            activeClassName="Mui-selected"
+                            onClick={props.onClick}
+                        >
                             <ListItemIcon>
                                 <StarsIcon />
                             </ListItemIcon>
