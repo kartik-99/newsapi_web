@@ -14,7 +14,7 @@ class Root extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            drawerOpen: true,
+            drawerOpen: false,
         };
     }
 

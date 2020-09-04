@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
     },
     appBar: {
-        position: "relative",
+        position: "fixed",
         zIndex: 1400,
         margin: 0,
     },
