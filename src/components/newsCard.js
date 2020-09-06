@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
@@ -11,16 +10,16 @@ import Typography from "@material-ui/core/Typography";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         textAlign: "left",
+        marginTop: "10%",
     },
     media: {
         height: 0,
-        paddingTop: "100%", //"56.25%", // 16:9
+        paddingTop: "10%", //(iprops) => iprops.ratio.toString() + "%",
     },
     expand: {
         transform: "rotate(0deg)",
@@ -35,12 +34,40 @@ const useStyles = makeStyles((theme) => ({
     gridRoot: {
         flexGrow: 1,
     },
+    bold: {
+        fontWeight: "bold",
+    },
+    author: {
+        fontSize: "10",
+        fontStyle: "italic",
+    },
+    dateText: {
+        fontWeight: "fontWeightLight",
+        textAlign: "right",
+        fontFamily: "Monospace",
+    },
+    littlePadding: {
+        paddingTop: "5%",
+    },
 }));
+
+const showContentOrNot = (news) => {
+    let a = news.description.split(".")[0];
+    if (news.content === null) {
+        return false;
+    }
+    let b = news.content.split(".")[0];
+    if (a === b) {
+        return false;
+    }
+    return true;
+};
 
 const NewsCard = (props) => {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
+    const showContent = showContentOrNot(props.newsItem);
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -48,41 +75,43 @@ const NewsCard = (props) => {
     const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
     const mo = new Intl.DateTimeFormat("en", { month: "short" }).format(d);
     const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
-    const date = `${da}-${mo}-${ye}`;
+    const date = `${da} ${mo}, ${ye}`;
 
     return (
         <Card className={classes.root}>
-            <CardMedia
-                className={classes.media}
-                image={props.newsItem.urlToImage}
+            <img
+                src={props.newsItem.urlToImage}
+                alt=""
+                backgroundimage={"../../public/no_image.jpg"}
+                width="100%"
             />
             <CardContent>
-                <Typography variant="h6">{props.newsItem.title}</Typography>
-                <div className={classes.gridRoot}>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <Typography variant="caption">
-                                <Box fontSize="10" fontStyle="italic">
-                                    {props.newsItem.author},{" "}
-                                    {props.newsItem.source.name}
-                                </Box>
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography>
-                                <Box
-                                    fontWeight="fontWeightLight"
-                                    textAlign="right"
-                                    fontFamily="Monospace"
-                                >
-                                    {date}
-                                </Box>
-                            </Typography>
-                        </Grid>
+                <Typography variant="h6" className={classes.bold}>
+                    {props.newsItem.title}
+                </Typography>
+                <Grid container className={classes.gridRoot}>
+                    <Grid item xs={6}>
+                        <Typography
+                            variant="caption"
+                            className={classes.author}
+                        >
+                            {props.newsItem.author},{" "}
+                            {props.newsItem.source.name}
+                        </Typography>
                     </Grid>
-                </div>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    <Box paddingTop="5%">{props.newsItem.description}</Box>
+                    <Grid item xs={6}>
+                        <Typography className={classes.dateText}>
+                            {date}
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    className={classes.littlePadding}
+                >
+                    {props.newsItem.description}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -92,27 +121,32 @@ const NewsCard = (props) => {
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>
-                <IconButton
-                    className={clsx(classes.expand, {
-                        [classes.expandOpen]: expanded,
-                    })}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </IconButton>
+                {showContent && (
+                    <IconButton
+                        className={clsx(classes.expand, {
+                            [classes.expandOpen]: expanded,
+                        })}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                    >
+                        <ExpandMoreIcon />
+                    </IconButton>
+                )}
             </CardActions>
-            <Collapse
-                in={expanded}
-                timeout="auto"
-                unmountOnExit
-                className={classes.media}
-            >
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {props.newsItem.content}
-                </Typography>
-            </Collapse>
+            {showContent && (
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            component="p"
+                        >
+                            {props.newsItem.content}
+                        </Typography>
+                    </CardContent>
+                </Collapse>
+            )}
         </Card>
     );
 };
