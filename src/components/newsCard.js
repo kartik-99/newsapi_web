@@ -15,11 +15,11 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 const useStyles = makeStyles((theme) => ({
     root: {
         textAlign: "left",
-        marginTop: "10%",
+        margin: "3%",
     },
     media: {
         height: 0,
-        paddingTop: "10%", //(iprops) => iprops.ratio.toString() + "%",
+        // paddingTop: "10%", //(iprops) => iprops.ratio.toString() + "%",
     },
     expand: {
         transform: "rotate(0deg)",
@@ -45,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "fontWeightLight",
         textAlign: "right",
         fontFamily: "Monospace",
+        alignItems: "flex-end",
+        justifyContent: "flex-end",
     },
     littlePadding: {
         paddingTop: "5%",

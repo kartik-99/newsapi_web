@@ -5,9 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        paddingTop: "200px",
-        paddingLeft: "100px",
-        paddingRight: "100px",
         flexGrow: 1,
     },
 }));
@@ -39,7 +36,7 @@ const NewsGrid = (props) => {
             container
             direction="row"
             className={classes.root}
-            spacing={3}
+            // spacing={2}
             alignItems="flex-start"
         >
             {Object.keys(splitArticles).map((key, index) => {
@@ -49,7 +46,8 @@ const NewsGrid = (props) => {
                         key={key}
                         container
                         item
-                        xs={4}
+                        xs={12}
+                        sm={4}
                         direction="column"
                         justify="space-around"
                         alignItems="center"

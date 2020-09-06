@@ -55,6 +55,9 @@ class Root extends React.Component {
                     <Route exact path="/sources">
                         <Sources />
                     </Route>
+                    <Route path="/">
+                        <Feed />
+                    </Route>
                 </Switch>
             </Router>
         );
