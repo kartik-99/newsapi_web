@@ -1,21 +1,20 @@
 import React, { Component } from "react";
-import { Typography } from "@material-ui/core";
+
+import SourceGrid from "../components/sourceGrid";
+import { sampleSourceRequest } from "../sampleData";
+import Grid from "@material-ui/core/Grid";
 
 class Sources extends Component {
     render() {
         return (
             <div>
-                <Typography
-                    variant="h4"
-                    color="inherit"
-                    style={{
-                        align: "center",
-                        textAlign: "center",
-                        padding: "300px",
-                    }}
-                >
-                    Sources Component Coming Soon!
-                </Typography>
+                <Grid container direction="row" style={{ paddingTop: "15%" }}>
+                    <Grid item xs={false} sm={1} />
+                    <Grid item xs={12} sm={10}>
+                        <SourceGrid sources={sampleSourceRequest.sources} />
+                    </Grid>
+                    <Grid item xs={false} sm={1} />
+                </Grid>
             </div>
         );
     }
