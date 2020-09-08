@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
     littlePadding: {
         paddingTop: "5%",
     },
+    red: {
+        color: "red",
+    },
 }));
 
 const showContentOrNot = (news) => {
@@ -117,8 +120,17 @@ const NewsCard = (props) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to bookmarks">
-                    <BookmarkIcon />
+                <IconButton
+                    aria-label="add to bookmarks"
+                    onClick={() => {
+                        props.manageBookmarks(props.newsItem);
+                    }}
+                >
+                    {props.newsItem.isBookmark ? (
+                        <BookmarkIcon className={classes.red} />
+                    ) : (
+                        <BookmarkIcon />
+                    )}
                 </IconButton>
                 <IconButton aria-label="share">
                     <ShareIcon />

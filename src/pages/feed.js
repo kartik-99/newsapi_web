@@ -7,11 +7,11 @@ class Feed extends Component {
         return (
             <div>
                 <Grid container direction="row" style={{ paddingTop: "15%" }}>
-                    <Grid item xs={0} sm={1} />
+                    <Grid item xs={false} sm={1} />
                     <Grid item xs={12} sm={10}>
                         <NewsGrid news={sampleRequest.articles} />
                     </Grid>
-                    <Grid item xs={0} sm={1} />
+                    <Grid item xs={false} sm={1} />
                 </Grid>
             </div>
         );
