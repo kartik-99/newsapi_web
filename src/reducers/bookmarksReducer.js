@@ -1,12 +1,13 @@
 export default function (state = {}, action) {
-    var b = state;
+    let b = state;
     switch (action.type) {
         case "BOOKMARK_ADDED":
+            console.log(b);
             var a = action.payload;
             a.isBookmark = true;
             if (Object.keys(b).length === 0) {
                 b[0] = a;
-                return b;
+                return { ...b };
             }
             var index =
                 Math.max(
@@ -15,9 +16,10 @@ export default function (state = {}, action) {
                     })
                 ) + 1;
             b[index] = a;
-            return b;
+            return { ...b };
 
         case "BOOKMARK_REMOVED":
+            console.log(b);
             delete b[
                 Object.keys(b)[
                     Object.values(b).findIndex(
@@ -25,7 +27,7 @@ export default function (state = {}, action) {
                     )
                 ]
             ];
-            return b;
+            return { ...b };
         default:
             return state;
     }
