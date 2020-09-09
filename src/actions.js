@@ -5,9 +5,23 @@ export const addBookmark = (newsItem) => {
     };
 };
 
-export const removeBookmark = (newsItemUrl) => {
+export const removeBookmark = (newsItem) => {
     return {
         type: "BOOKMARK_REMOVED",
-        payload: newsItemUrl,
+        payload: newsItem,
+    };
+};
+
+export const addSource = (sourceItem) => {
+    return {
+        type: "SOURCE_ADDED",
+        payload: sourceItem,
+    };
+};
+
+export const removeSource = (sourceItem) => {
+    return {
+        type: "SOURCE_REMOVED",
+        payload: sourceItem,
     };
 };

@@ -5,7 +5,7 @@ export default function (state = {}, action) {
             var a = action.payload;
             a.isBookmark = true;
             if (Object.keys(b).length === 0) {
-                b["0"] = a;
+                b[0] = a;
                 return b;
             }
             var index =
@@ -14,7 +14,7 @@ export default function (state = {}, action) {
                         return parseInt(x, 10);
                     })
                 ) + 1;
-            b[index.toString()] = a;
+            b[index] = a;
             return b;
 
         case "BOOKMARK_REMOVED":

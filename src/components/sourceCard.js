@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
     white: {
         background: "white",
     },
+    red: {
+        color: "red",
+    },
 }));
 
 const SourceCard = (props) => {
@@ -124,12 +127,21 @@ const SourceCard = (props) => {
                             {props.sourceItem.name}
                         </Typography>
                     </Grid>
-                    <Grid>
-                        <IconButton>
-                            <FavoriteIcon />
+                    <Grid item>
+                        <IconButton
+                            aria-label="add to favourites"
+                            onClick={() => {
+                                props.manageFavourites(props.sourceItem);
+                            }}
+                        >
+                            {props.sourceItem.isFav ? (
+                                <FavoriteIcon className={classes.red} />
+                            ) : (
+                                <FavoriteIcon />
+                            )}
                         </IconButton>
                     </Grid>
-                    <Grid>
+                    <Grid item>
                         <IconButton>
                             <ForwardIcon />
                         </IconButton>

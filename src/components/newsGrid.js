@@ -69,7 +69,7 @@ const NewsGrid = (props) => {
             // spacing={2}
             alignItems="flex-start"
         >
-            {console.log("rerendering")}
+            {/* {console.log("rerendering")} */}
             {Object.keys(splitArticles).map((key, index) => {
                 const articles = splitArticles[key];
                 return (

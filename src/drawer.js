@@ -106,7 +106,7 @@ export default function MasterDrawer(props) {
                         </ListItem>
                         <ListItem
                             component={NavLink}
-                            to="/sources/favourites"
+                            to="/favourites"
                             activeClassName="Mui-selected"
                             onClick={props.onClick}
                         >

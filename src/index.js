@@ -9,6 +9,7 @@ import Bookmarks from "./pages/bookmarks";
 import SearchAll from "./pages/searchAll";
 import SearchTop from "./pages/searchTop";
 import Sources from "./pages/sources";
+import Favourites from "./pages/favourites";
 
 import { Provider } from "react-redux";
 import { createStore } from "redux";
@@ -56,14 +57,14 @@ class Root extends React.Component {
                         <Route path="/search/all">
                             <SearchAll />
                         </Route>
-                        <Route exact path="/sources/favourites">
-                            <Sources />
+                        <Route exact path="/favourites">
+                            <Favourites />
                         </Route>
                         <Route exact path="/sources">
                             <Sources />
                         </Route>
                         <Route path="/">
-                            <Feed />
+                            <Sources />
                         </Route>
                     </Switch>
                 </Provider>
