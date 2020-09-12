@@ -1,7 +1,8 @@
+import { BOOKMARK_ADDED, BOOKMARK_REMOVED } from "../actions";
 export default function (state = {}, action) {
     let b = state;
     switch (action.type) {
-        case "BOOKMARK_ADDED":
+        case BOOKMARK_ADDED:
             console.log(b);
             var a = action.payload;
             a.isBookmark = true;
@@ -18,7 +19,7 @@ export default function (state = {}, action) {
             b[index] = a;
             return { ...b };
 
-        case "BOOKMARK_REMOVED":
+        case BOOKMARK_REMOVED:
             console.log(b);
             delete b[
                 Object.keys(b)[

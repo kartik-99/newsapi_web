@@ -57,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const showContentOrNot = (news) => {
+    if (news.description === null) {
+        return true;
+    }
     let a = news.description.split(".")[0];
     if (news.content === null) {
         return false;
@@ -82,6 +85,10 @@ const NewsCard = (props) => {
     const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
     const date = `${da} ${mo}, ${ye}`;
 
+    const correctAuthor =
+        /[a-zA-Z]+$/.test(props.newsItem.author) |
+        (props.newsItem.author !== props.newsItem.source.name);
+
     return (
         <Card className={classes.root}>
             <img
@@ -96,13 +103,23 @@ const NewsCard = (props) => {
                 </Typography>
                 <Grid container className={classes.gridRoot}>
                     <Grid item xs={6}>
-                        <Typography
-                            variant="caption"
-                            className={classes.author}
-                        >
-                            {props.newsItem.author},{" "}
-                            {props.newsItem.source.name}
-                        </Typography>
+                        {correctAuthor ? (
+                            <Typography
+                                variant="caption"
+                                className={classes.author}
+                            >
+                                {props.newsItem.author}
+                                {", "}
+                                {props.newsItem.source.name}
+                            </Typography>
+                        ) : (
+                            <Typography
+                                variant="caption"
+                                className={classes.author}
+                            >
+                                {props.newsItem.source.name}
+                            </Typography>
+                        )}
                     </Grid>
                     <Grid item xs={6}>
                         <Typography className={classes.dateText}>

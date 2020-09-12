@@ -1,21 +1,100 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import NewsGrid from "../components/newsGrid";
-import { sampleRequest } from "../sampleData";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { makeApiCall, setLoading } from "../actions";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Typography } from "@material-ui/core";
+
 class Feed extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            url: "/top-headlines",
+            label: "FEED",
+            data: {
+                sources: Object.values(this.props.sources)
+                    .map((source) => {
+                        return source.id;
+                    })
+                    .join(","),
+
+                pageSize: 100,
+                page: 1,
+            },
+        };
+    }
+    componentDidMount() {
+        console.log(this.props.data);
+
+        this.props.setLoading();
+        this.props.makeApiCall(this.state);
+    }
+
     render() {
         return (
             <div>
-                <Grid container direction="row" style={{ paddingTop: "15%" }}>
-                    <Grid item xs={false} sm={1} />
-                    <Grid item xs={12} sm={10}>
-                        <NewsGrid news={sampleRequest.articles} />
+                {this.state.data.sources.length === 0 ? (
+                    <Typography
+                        variant="h4"
+                        color="inherit"
+                        style={{
+                            align: "center",
+                            textAlign: "center",
+                            padding: "300px",
+                        }}
+                    >
+                        Welcome! News from your favourite news sources comes up
+                        here. Go ahead and add a few news sources to your
+                        favourites!
+                    </Typography>
+                ) : (
+                    <Grid
+                        container
+                        direction="row"
+                        style={{ paddingTop: "15%" }}
+                    >
+                        <Grid item xs={false} sm={1} />
+
+                        <Grid item xs={12} sm={10}>
+                            {this.props.data.loading |
+                            (this.props.data.data.feed.articles[
+                                this.state.data.page
+                            ] ===
+                                undefined) ? (
+                                <CircularProgress />
+                            ) : (
+                                <NewsGrid
+                                    news={
+                                        // sampleRequest.articles
+                                        this.props.data.data.feed.articles[
+                                            this.state.data.page
+                                        ]
+                                    }
+                                />
+                            )}
+                        </Grid>
+                        <Grid item xs={false} sm={1} />
                     </Grid>
-                    <Grid item xs={false} sm={1} />
-                </Grid>
+                )}
             </div>
         );
     }
 }
 
-export default Feed;
+function mapStateToProps(state) {
+    return {
+        data: state.data,
+        sources: state.sources,
+    };
+}
+
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators(
+        { makeApiCall: makeApiCall, setLoading: setLoading },
+        dispatch
+    );
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(Feed);

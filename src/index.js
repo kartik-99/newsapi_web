@@ -12,10 +12,11 @@ import Sources from "./pages/sources";
 import Favourites from "./pages/favourites";
 
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import allData from "./reducers/index";
+import apiMiddleware from "./middleware/apiMiddleware";
 
-const store = createStore(allData);
+const store = createStore(allData, applyMiddleware(apiMiddleware));
 
 class Root extends React.Component {
     constructor(props) {
