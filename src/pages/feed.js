@@ -20,16 +20,33 @@ class Feed extends Component {
                     })
                     .join(","),
 
-                pageSize: 100,
+                pageSize: 20,
                 page: 1,
             },
         };
+        this.changePage = this.changePage.bind(this);
+        this.loadData = this.loadData.bind(this);
     }
     componentDidMount() {
-        console.log(this.props.data);
+        this.loadData();
+    }
 
+    loadData = () => {
         this.props.setLoading();
         this.props.makeApiCall(this.state);
+    };
+
+    changePage(pageNo) {
+        this.setState(
+            {
+                ...this.state,
+                data: {
+                    ...this.state.data,
+                    page: pageNo,
+                },
+            },
+            () => this.loadData()
+        );
     }
 
     render() {
@@ -66,6 +83,10 @@ class Feed extends Component {
                                 <CircularProgress />
                             ) : (
                                 <NewsGrid
+                                    page={this.state.data.page}
+                                    resultsPerPage={this.state.data.pageSize}
+                                    label={this.state.label}
+                                    changePage={this.changePage}
                                     news={
                                         // sampleRequest.articles
                                         this.props.data.data.feed.articles[

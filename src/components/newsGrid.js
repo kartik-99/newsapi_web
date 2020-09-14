@@ -5,12 +5,28 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addBookmark, removeBookmark } from "../actions";
+import Pagination from "@material-ui/lab/Pagination";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        margin: "auto",
     },
 }));
+
+const Paginator = (props) => {
+    const handleChange = (event, value) => {
+        props.changePage(value);
+    };
+    return (
+        <Pagination
+            count={props.totalPages}
+            defaultPage={props.page}
+            boundaryCount={2}
+            onChange={handleChange}
+        />
+    );
+};
 
 const split = (articles) => {
     let one = [];
@@ -61,40 +77,63 @@ const NewsGrid = (props) => {
             props.addBookmark(newsItem);
         }
     };
+
+    let results = 0;
+    switch (props.label) {
+        case "FEED":
+            results = props.apiData.data.feed.results;
+            break;
+        case "SEARCH":
+            results = props.apiData.data.search_results.results;
+            break;
+        default:
+            results = 0;
+    }
+
+    let totalPages = Math.ceil(results / props.resultsPerPage);
+    let showPaginator = totalPages > 1 ? true : false;
+
+    let pager = (
+        <Grid item xs={12} align="center" className={classes.root}>
+            <Paginator
+                page={props.page}
+                changePage={props.changePage}
+                totalPages={totalPages}
+            />
+        </Grid>
+    );
+
     return (
-        <Grid
-            container
-            direction="row"
-            className={classes.root}
-            // spacing={2}
-            alignItems="flex-start"
-        >
-            {/* {console.log("rerendering")} */}
-            {Object.keys(splitArticles).map((key, index) => {
-                const articles = splitArticles[key];
-                return (
-                    <Grid
-                        key={key}
-                        container
-                        item
-                        xs={12}
-                        sm={4}
-                        direction="column"
-                        justify="space-around"
-                        alignItems="center"
-                    >
-                        {Object.keys(articles).map((key, index) => {
-                            return (
-                                <NewsCard
-                                    key={key}
-                                    newsItem={articles[key]}
-                                    manageBookmarks={manageBookmarks}
-                                />
-                            );
-                        })}
-                    </Grid>
-                );
-            })}
+        <Grid container direction="column" className={classes.root}>
+            {showPaginator && pager}
+            <Grid container item direction="row" alignItems="flex-start">
+                {Object.keys(splitArticles).map((key, index) => {
+                    const articles = splitArticles[key];
+                    return (
+                        <Grid
+                            key={key}
+                            container
+                            item
+                            xs={12}
+                            sm={4}
+                            direction="column"
+                            justify="space-around"
+                            alignItems="center"
+                        >
+                            {Object.keys(articles).map((key, index) => {
+                                return (
+                                    <NewsCard
+                                        key={key}
+                                        newsItem={articles[key]}
+                                        manageBookmarks={manageBookmarks}
+                                    />
+                                );
+                            })}
+                        </Grid>
+                    );
+                })}
+            </Grid>
+            {showPaginator && pager}
         </Grid>
     );
 };
@@ -102,6 +141,7 @@ const NewsGrid = (props) => {
 function mapStateToProps(state) {
     return {
         bookmarks: state.bookmarks,
+        apiData: state.data,
     };
 }
 

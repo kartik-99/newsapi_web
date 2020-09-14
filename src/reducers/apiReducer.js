@@ -35,7 +35,6 @@ export default function (state = defaultState, action) {
                 loading: false,
             };
         case SET_FEED:
-            console.log(action.payload);
             let a = {
                 ...state,
                 loading: false,

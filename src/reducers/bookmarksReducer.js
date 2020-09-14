@@ -3,7 +3,6 @@ export default function (state = {}, action) {
     let b = state;
     switch (action.type) {
         case BOOKMARK_ADDED:
-            console.log(b);
             var a = action.payload;
             a.isBookmark = true;
             if (Object.keys(b).length === 0) {
@@ -20,7 +19,6 @@ export default function (state = {}, action) {
             return { ...b };
 
         case BOOKMARK_REMOVED:
-            console.log(b);
             delete b[
                 Object.keys(b)[
                     Object.values(b).findIndex(
