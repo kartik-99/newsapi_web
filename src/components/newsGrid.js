@@ -10,9 +10,14 @@ import { Box } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
+    loaderRoot: {
+        flexGrow: 1,
+        margin: "auto",
+    },
     root: {
         flexGrow: 1,
         margin: "auto",
+        paddingBottom: "10%",
     },
 }));
 
@@ -23,7 +28,7 @@ const Paginator = (props) => {
     return (
         <Pagination
             count={props.totalPages}
-            defaultPage={props.page}
+            page={props.page}
             boundaryCount={2}
             onChange={handleChange}
         />
@@ -89,7 +94,15 @@ const NewsGrid = (props) => {
         (toShow === undefined) |
         (toShow[props.page] === undefined)
     ) {
-        return <Box>{props.apiData.loading && <CircularProgress />}</Box>;
+        return (
+            <Box flexGrow={1} alignItems="center">
+                {props.apiData.loading && (
+                    <Box margin="auto" flexGrow={1} align="center">
+                        <CircularProgress />
+                    </Box>
+                )}
+            </Box>
+        );
     }
 
     var news = checkBookmarks(
@@ -111,7 +124,7 @@ const NewsGrid = (props) => {
     let showPaginator = totalPages > 1 ? true : false;
 
     let pager = (
-        <Grid item xs={12} align="center" className={classes.root}>
+        <Grid item xs={12} align="center" className={classes.loaderRoot}>
             <Paginator
                 page={props.page}
                 changePage={props.changePage}
@@ -124,7 +137,9 @@ const NewsGrid = (props) => {
         <Grid container direction="column" className={classes.root}>
             {showPaginator && pager}
             {props.apiData.loading | (toShow[props.page] === undefined) ? (
-                <CircularProgress />
+                <Box margin="auto" paddingTop="10%" paddingBottom="10%">
+                    <CircularProgress />
+                </Box>
             ) : (
                 <Grid container item direction="row" alignItems="flex-start">
                     {Object.keys(splitArticles).map((key, index) => {

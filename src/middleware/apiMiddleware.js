@@ -8,6 +8,7 @@ const apiMiddleware = ({ dispatch }) => (next) => (action) => {
     const { url, data, label } = action.payload;
 
     axios.defaults.baseURL = "http://newsapi.org/v2/";
+    axios.defaults.headers.common["Upgrade"] = "HTTP/3.0";
     axios.defaults.headers.common["Content-Type"] = "application/json";
     axios.defaults.headers.common["X-Api-Key"] =
         "bdba5de1b490495796a1595f77ed3f37";
@@ -31,15 +32,17 @@ const apiMiddleware = ({ dispatch }) => (next) => (action) => {
                     return;
             }
         })
-        .catch((error) => {});
+        .catch((error) => {
+            console.log(error);
+        });
 
     axios.interceptors.request.use((request) => {
-        console.log("Starting Request", request);
+        console.log("Starting Request : ", request);
         return request;
     });
 
     axios.interceptors.response.use((response) => {
-        console.log("Response:", response);
+        console.log("Response : ", response);
         return response;
     });
 };

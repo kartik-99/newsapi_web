@@ -2,7 +2,7 @@ import React from "react";
 import SourceCard from "./sourceCard";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { addSource, removeSource } from "../actions";
+import { addSource, removeSource, resetFeed } from "../actions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -37,6 +37,7 @@ const SourceGrid = (props) => {
         Object.values(props.favourites)
     );
     const manageFavourites = (sourceItem) => {
+        props.resetFeed();
         if (sourceItem.isFav) {
             props.removeSource(sourceItem);
         } else {
@@ -76,7 +77,11 @@ function mapStateToProps(state) {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
-        { addSource: addSource, removeSource: removeSource },
+        {
+            addSource: addSource,
+            removeSource: removeSource,
+            resetFeed: resetFeed,
+        },
         dispatch
     );
 }

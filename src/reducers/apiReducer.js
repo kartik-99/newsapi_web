@@ -37,6 +37,33 @@ export default function (state = defaultState, action) {
                 loading: false,
             };
         case SET_FEED:
+            if (Object.keys(state.data.feed.articles).length === 0) {
+                let articlesObject = {
+                    1: action.payload.response.data.articles,
+                };
+                let pages = Math.ceil(
+                    action.payload.response.data.totalResults /
+                        action.payload.response.data.articles.length
+                );
+                let otherPages = [...Array(pages + 1).keys()].splice(2);
+                otherPages.map((p) => {
+                    articlesObject[p] = [];
+                });
+
+                let a = {
+                    ...state,
+                    loading: false,
+                    data: {
+                        ...state.data,
+                        feed: {
+                            results: action.payload.response.data.totalResults,
+                            articles: articlesObject,
+                        },
+                    },
+                };
+
+                return a;
+            }
             let a = {
                 ...state,
                 loading: false,

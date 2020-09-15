@@ -26,10 +26,12 @@ class Feed extends Component {
         };
         this.changePage = this.changePage.bind(this);
         this.loadData = this.loadData.bind(this);
-        console.log(this.state);
     }
     componentDidMount() {
-        this.loadData();
+        if (this.state.data.sources !== "") {
+            console.log("calling from componentdidmount");
+            this.loadData();
+        }
     }
 
     loadData = () => {
@@ -46,7 +48,12 @@ class Feed extends Component {
                     page: pageNo,
                 },
             },
-            () => this.loadData()
+            () => {
+                if (this.props.data.data.feed.articles[pageNo].length === 0) {
+                    console.log("calling from changepage");
+                    this.loadData();
+                }
+            }
         );
     }
 
