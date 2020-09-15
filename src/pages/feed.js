@@ -4,7 +4,7 @@ import NewsGrid from "../components/newsGrid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { makeApiCall, setLoading } from "../actions";
-import CircularProgress from "@material-ui/core/CircularProgress";
+// import CircularProgress from "@material-ui/core/CircularProgress";
 import { Typography } from "@material-ui/core";
 
 class Feed extends Component {
@@ -26,6 +26,7 @@ class Feed extends Component {
         };
         this.changePage = this.changePage.bind(this);
         this.loadData = this.loadData.bind(this);
+        console.log(this.state);
     }
     componentDidMount() {
         this.loadData();
@@ -75,26 +76,18 @@ class Feed extends Component {
                         <Grid item xs={false} sm={1} />
 
                         <Grid item xs={12} sm={10}>
-                            {this.props.data.loading |
-                            (this.props.data.data.feed.articles[
-                                this.state.data.page
-                            ] ===
-                                undefined) ? (
-                                <CircularProgress />
-                            ) : (
-                                <NewsGrid
-                                    page={this.state.data.page}
-                                    resultsPerPage={this.state.data.pageSize}
-                                    label={this.state.label}
-                                    changePage={this.changePage}
-                                    news={
-                                        // sampleRequest.articles
-                                        this.props.data.data.feed.articles[
-                                            this.state.data.page
-                                        ]
-                                    }
-                                />
-                            )}
+                            <NewsGrid
+                                page={this.state.data.page}
+                                resultsPerPage={this.state.data.pageSize}
+                                label={this.state.label}
+                                changePage={this.changePage}
+                                news={
+                                    // sampleRequest.articles
+                                    this.props.data.data.feed.articles[
+                                        this.state.data.page
+                                    ]
+                                }
+                            />
                         </Grid>
                         <Grid item xs={false} sm={1} />
                     </Grid>

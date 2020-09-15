@@ -4,6 +4,8 @@ import {
     SET_FEED,
     SET_SEARCH_RESULTS,
     SET_SOURCES,
+    RESET_FEED,
+    RESET_SEARCH,
 } from "../actions";
 
 const defaultState = {
@@ -75,6 +77,30 @@ export default function (state = defaultState, action) {
                 ...state,
                 loading: false,
                 sources: action.payload.response.data.sources,
+            };
+
+        case RESET_FEED:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    feed: {
+                        results: 0,
+                        articles: [],
+                    },
+                },
+            };
+
+        case RESET_SEARCH:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    search_results: {
+                        results: 0,
+                        articles: [],
+                    },
+                },
             };
         default:
             return state;

@@ -9,6 +9,8 @@ export const SET_FEED = "SET_FEED";
 export const SET_SOURCES = "SET_SOURCES";
 export const SET_SEARCH_RESULTS = "SET_SEARCH_RESULTS";
 export const SET_LOADING_STOP = "SET_LOADING_STOP";
+export const RESET_FEED = "RESET_FEED";
+export const RESET_SEARCH = "RESET_SEARCH";
 
 export const addBookmark = (newsItem) => {
     return {
@@ -69,5 +71,17 @@ export const feedSources = (response) => {
     return {
         type: SET_SOURCES,
         payload: { response: response },
+    };
+};
+
+export const resetFeed = () => {
+    return {
+        type: RESET_FEED,
+    };
+};
+
+export const resetSearch = () => {
+    return {
+        type: RESET_SEARCH,
     };
 };

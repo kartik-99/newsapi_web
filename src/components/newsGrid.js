@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addBookmark, removeBookmark } from "../actions";
 import Pagination from "@material-ui/lab/Pagination";
+import { Box } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,7 +68,34 @@ const checkBookmarks = (n, b) => {
 
 const NewsGrid = (props) => {
     const classes = useStyles();
-    var news = checkBookmarks(props.news, Object.values(props.bookmarks));
+    let toShow = [];
+    let results = 0;
+    switch (props.label) {
+        case "FEED":
+            results = props.apiData.data.feed.results;
+            toShow = props.apiData.data.feed.articles;
+            break;
+        case "SEARCH":
+            results = props.apiData.data.search_results.results;
+            toShow = props.apiData.data.search_results.articles;
+            break;
+        default:
+            results = 0;
+            toShow = [];
+    }
+
+    if (
+        (results === 0) |
+        (toShow === undefined) |
+        (toShow[props.page] === undefined)
+    ) {
+        return <Box>{props.apiData.loading && <CircularProgress />}</Box>;
+    }
+
+    var news = checkBookmarks(
+        toShow[props.page],
+        Object.values(props.bookmarks)
+    );
 
     var splitArticles = split(news);
 
@@ -77,18 +106,6 @@ const NewsGrid = (props) => {
             props.addBookmark(newsItem);
         }
     };
-
-    let results = 0;
-    switch (props.label) {
-        case "FEED":
-            results = props.apiData.data.feed.results;
-            break;
-        case "SEARCH":
-            results = props.apiData.data.search_results.results;
-            break;
-        default:
-            results = 0;
-    }
 
     let totalPages = Math.ceil(results / props.resultsPerPage);
     let showPaginator = totalPages > 1 ? true : false;
@@ -106,33 +123,37 @@ const NewsGrid = (props) => {
     return (
         <Grid container direction="column" className={classes.root}>
             {showPaginator && pager}
-            <Grid container item direction="row" alignItems="flex-start">
-                {Object.keys(splitArticles).map((key, index) => {
-                    const articles = splitArticles[key];
-                    return (
-                        <Grid
-                            key={key}
-                            container
-                            item
-                            xs={12}
-                            sm={4}
-                            direction="column"
-                            justify="space-around"
-                            alignItems="center"
-                        >
-                            {Object.keys(articles).map((key, index) => {
-                                return (
-                                    <NewsCard
-                                        key={key}
-                                        newsItem={articles[key]}
-                                        manageBookmarks={manageBookmarks}
-                                    />
-                                );
-                            })}
-                        </Grid>
-                    );
-                })}
-            </Grid>
+            {props.apiData.loading | (toShow[props.page] === undefined) ? (
+                <CircularProgress />
+            ) : (
+                <Grid container item direction="row" alignItems="flex-start">
+                    {Object.keys(splitArticles).map((key, index) => {
+                        const articles = splitArticles[key];
+                        return (
+                            <Grid
+                                key={key}
+                                container
+                                item
+                                xs={12}
+                                sm={4}
+                                direction="column"
+                                justify="space-around"
+                                alignItems="center"
+                            >
+                                {Object.keys(articles).map((key, index) => {
+                                    return (
+                                        <NewsCard
+                                            key={key}
+                                            newsItem={articles[key]}
+                                            manageBookmarks={manageBookmarks}
+                                        />
+                                    );
+                                })}
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            )}
             {showPaginator && pager}
         </Grid>
     );
