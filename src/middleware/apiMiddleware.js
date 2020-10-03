@@ -1,5 +1,11 @@
 import axios from "axios";
-import { API, feedNews, feedSearchResults, feedSources } from "../actions";
+import {
+    API,
+    feedNews,
+    feedSearchResults,
+    feedSources,
+    feedError,
+} from "../actions";
 
 const apiMiddleware = ({ dispatch }) => (next) => (action) => {
     next(action);
@@ -34,6 +40,7 @@ const apiMiddleware = ({ dispatch }) => (next) => (action) => {
         })
         .catch((error) => {
             console.log(error);
+            dispatch(feedError(error));
         });
 
     axios.interceptors.request.use((request) => {

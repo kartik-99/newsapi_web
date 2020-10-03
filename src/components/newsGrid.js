@@ -8,6 +8,7 @@ import { addBookmark, removeBookmark } from "../actions";
 import Pagination from "@material-ui/lab/Pagination";
 import { Box } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     loaderRoot: {
@@ -32,6 +33,14 @@ const Paginator = (props) => {
             boundaryCount={2}
             onChange={handleChange}
         />
+    );
+};
+
+const Progress = () => {
+    return (
+        <Box margin="auto" paddingTop="10%" paddingBottom="10%">
+            <CircularProgress />
+        </Box>
     );
 };
 
@@ -73,42 +82,31 @@ const checkBookmarks = (n, b) => {
 
 const NewsGrid = (props) => {
     const classes = useStyles();
-    let toShow = [];
-    let results = 0;
-    switch (props.label) {
-        case "FEED":
-            results = props.apiData.data.feed.results;
-            toShow = props.apiData.data.feed.articles;
-            break;
-        case "SEARCH":
-            results = props.apiData.data.search_results.results;
-            toShow = props.apiData.data.search_results.articles;
-            break;
-        default:
-            results = 0;
-            toShow = [];
-    }
+    // let toShow = [];
+    // let results = 0;
+    // switch (props.label) {
+    //     case "FEED":
+    //         results = props.apiData.data.feed.results;
+    //         toShow = props.apiData.data.feed.articles;
+    //         break;
+    //     case "SEARCH":
+    //         results = props.apiData.data.search_results.results;
+    //         toShow = props.apiData.data.search_results.articles;
+    //         break;
+    //     default:
+    //         results = 0;
+    //         toShow = [];
+    // }
 
-    if (
-        (results === 0) |
-        (toShow === undefined) |
-        (toShow[props.page] === undefined)
-    ) {
-        return (
-            <Box flexGrow={1} alignItems="center">
-                {props.apiData.loading && (
-                    <Box margin="auto" flexGrow={1} align="center">
-                        <CircularProgress />
-                    </Box>
-                )}
-            </Box>
-        );
-    }
+    // if (
+    //     (results === 0) |
+    //     (toShow === undefined) |
+    //     (toShow[props.page] === undefined)
+    // ) {
 
-    var news = checkBookmarks(
-        toShow[props.page],
-        Object.values(props.bookmarks)
-    );
+    // }
+
+    var news = checkBookmarks(props.news, Object.values(props.bookmarks));
 
     var splitArticles = split(news);
 
@@ -120,7 +118,7 @@ const NewsGrid = (props) => {
         }
     };
 
-    let totalPages = Math.ceil(results / props.resultsPerPage);
+    let totalPages = props.totalPages;
     let showPaginator = totalPages > 1 ? true : false;
 
     let pager = (
@@ -128,7 +126,7 @@ const NewsGrid = (props) => {
             <Paginator
                 page={props.page}
                 changePage={props.changePage}
-                totalPages={totalPages}
+                totalPages={props.totalPages}
             />
         </Grid>
     );
@@ -136,11 +134,21 @@ const NewsGrid = (props) => {
     return (
         <Grid container direction="column" className={classes.root}>
             {showPaginator && pager}
-            {props.apiData.loading | (toShow[props.page] === undefined) ? (
-                <Box margin="auto" paddingTop="10%" paddingBottom="10%">
-                    <CircularProgress />
-                </Box>
-            ) : (
+            {props.apiData.error !== "" && (
+                <Typography
+                    variant="h4"
+                    color="inherit"
+                    style={{
+                        align: "center",
+                        textAlign: "center",
+                        padding: "300px",
+                    }}
+                >
+                    {props.apiData.error}
+                </Typography>
+            )}
+            {props.apiData.loading && <Progress />}
+            {props.news.length !== 0 && (
                 <Grid container item direction="row" alignItems="flex-start">
                     {Object.keys(splitArticles).map((key, index) => {
                         const articles = splitArticles[key];

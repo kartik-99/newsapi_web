@@ -11,6 +11,8 @@ export const SET_SEARCH_RESULTS = "SET_SEARCH_RESULTS";
 export const SET_LOADING_STOP = "SET_LOADING_STOP";
 export const RESET_FEED = "RESET_FEED";
 export const RESET_SEARCH = "RESET_SEARCH";
+export const SET_ERROR = "SET_ERROR";
+export const RESET_ERROR = "RESET_ERROR";
 
 export const addBookmark = (newsItem) => {
     return {
@@ -83,5 +85,18 @@ export const resetFeed = () => {
 export const resetSearch = () => {
     return {
         type: RESET_SEARCH,
+    };
+};
+
+export const feedError = (error) => {
+    return {
+        type: SET_ERROR,
+        payload: error,
+    };
+};
+
+export const resetError = () => {
+    return {
+        type: RESET_ERROR,
     };
 };

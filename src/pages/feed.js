@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import NewsGrid from "../components/newsGrid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { makeApiCall, setLoading } from "../actions";
+import { makeApiCall, setLoading, resetError } from "../actions";
 // import CircularProgress from "@material-ui/core/CircularProgress";
 import { Typography } from "@material-ui/core";
 
@@ -40,6 +40,7 @@ class Feed extends Component {
     };
 
     changePage(pageNo) {
+        this.props.resetError();
         this.setState(
             {
                 ...this.state,
@@ -84,15 +85,28 @@ class Feed extends Component {
 
                         <Grid item xs={12} sm={10}>
                             <NewsGrid
+                                totalPages={
+                                    this.props.data.data.feed.results !== 0
+                                        ? Math.ceil(
+                                              this.props.data.data.feed
+                                                  .results /
+                                                  this.state.data.pageSize
+                                          )
+                                        : 0
+                                }
                                 page={this.state.data.page}
                                 resultsPerPage={this.state.data.pageSize}
                                 label={this.state.label}
                                 changePage={this.changePage}
+                                error={this.props.data.data.error}
                                 news={
-                                    // sampleRequest.articles
-                                    this.props.data.data.feed.articles[
-                                        this.state.data.page
-                                    ]
+                                    Array.isArray(
+                                        this.props.data.data.feed.articles
+                                    )
+                                        ? []
+                                        : this.props.data.data.feed.articles[
+                                              this.state.data.page
+                                          ]
                                 }
                             />
                         </Grid>
@@ -113,7 +127,11 @@ function mapStateToProps(state) {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
-        { makeApiCall: makeApiCall, setLoading: setLoading },
+        {
+            makeApiCall: makeApiCall,
+            setLoading: setLoading,
+            resetError: resetError,
+        },
         dispatch
     );
 }

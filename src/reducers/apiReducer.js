@@ -6,6 +6,8 @@ import {
     SET_SOURCES,
     RESET_FEED,
     RESET_SEARCH,
+    SET_ERROR,
+    RESET_ERROR,
 } from "../actions";
 
 const defaultState = {
@@ -48,6 +50,7 @@ export default function (state = defaultState, action) {
                 let otherPages = [...Array(pages + 1).keys()].splice(2);
                 otherPages.map((p) => {
                     articlesObject[p] = [];
+                    return null;
                 });
 
                 let a = {
@@ -109,6 +112,7 @@ export default function (state = defaultState, action) {
         case RESET_FEED:
             return {
                 ...state,
+                error: "",
                 data: {
                     ...state.data,
                     feed: {
@@ -121,6 +125,7 @@ export default function (state = defaultState, action) {
         case RESET_SEARCH:
             return {
                 ...state,
+                error: "",
                 data: {
                     ...state.data,
                     search_results: {
@@ -128,6 +133,55 @@ export default function (state = defaultState, action) {
                         articles: [],
                     },
                 },
+            };
+
+        case SET_ERROR:
+            let status = 0;
+            let e1 =
+                action.payload.message === undefined
+                    ? action.payload.message
+                    : " ";
+            let error = "";
+            if (action.payload.message === "Network Error") {
+                status = 1;
+            } else {
+                status = action.payload.response.status;
+            }
+            switch (status) {
+                case 1:
+                    error = "Network Issue!";
+                    break;
+                case 200:
+                    error = "OK. The request was executed successfully.";
+                    break;
+                case 400:
+                    error =
+                        "Bad Request. The request was unacceptable, often due to a missing or misconfigured parameter.";
+                    break;
+                case 401:
+                    error =
+                        "Unauthorized. Your API key was missing from the request, or wasn't correct.";
+                    break;
+                case 429:
+                    error =
+                        "Too Many Requests. You made too many requests within a window of time and have been rate limited. Back off for a while.";
+                    break;
+                case 500:
+                    error = "Server Error. Something went wrong on our side.";
+                    break;
+                default:
+                    error = "Unknown Error !";
+            }
+
+            return {
+                ...state,
+                loading: false,
+                error: e1.concat(error),
+            };
+        case RESET_ERROR:
+            return {
+                ...state,
+                error: "",
             };
         default:
             return state;
