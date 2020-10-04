@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Typography } from "@material-ui/core";
 
-class SearchTop extends Component {
+class Search extends Component {
     render() {
         return (
             <div>
@@ -14,11 +14,11 @@ class SearchTop extends Component {
                         padding: "300px",
                     }}
                 >
-                    Top Headlines Search Component Coming Soon!
+                    Search Component Coming Soon!
                 </Typography>
             </div>
         );
     }
 }
 
-export default SearchTop;
+export default Search;

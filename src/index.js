@@ -6,8 +6,7 @@ import Navbar from "./navbar";
 import MasterDrawer from "./drawer";
 import Feed from "./pages/feed";
 import Bookmarks from "./pages/bookmarks";
-import SearchAll from "./pages/searchAll";
-import SearchTop from "./pages/searchTop";
+import Search from "./pages/search";
 import Sources from "./pages/sources";
 import Favourites from "./pages/favourites";
 
@@ -52,11 +51,8 @@ class Root extends React.Component {
                         <Route path="/bookmarks">
                             <Bookmarks />
                         </Route>
-                        <Route path="/search/top">
-                            <SearchTop />
-                        </Route>
-                        <Route path="/search/all">
-                            <SearchAll />
+                        <Route path="/search">
+                            <Search />
                         </Route>
                         <Route exact path="/favourites">
                             <Favourites />

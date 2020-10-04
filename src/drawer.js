@@ -13,8 +13,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import ClearAllIcon from "@material-ui/icons/ClearAll"; // feed
 import BookmarksIcon from "@material-ui/icons/Bookmarks"; // bookmarks
 import RssFeedIcon from "@material-ui/icons/RssFeed"; // sources
-import NotificationImportantIcon from "@material-ui/icons/NotificationImportant"; // search top headlines
-import AllInclusiveIcon from "@material-ui/icons/AllInclusive"; // all search
+import FindInPageIcon from "@material-ui/icons/FindInPage"; // search top headlines
 import StarsIcon from "@material-ui/icons/Stars"; // fav sources
 import { NavLink } from "react-router-dom";
 
@@ -38,7 +37,7 @@ export default function MasterDrawer(props) {
                 <Toolbar />
                 <div className={classes.drawerContainer}>
                     <List>
-                        <ListSubheader>News Items</ListSubheader>
+                        <ListSubheader>News</ListSubheader>
                         <ListItem
                             component={NavLink}
                             to="/feed"
@@ -62,32 +61,16 @@ export default function MasterDrawer(props) {
                             </ListItemIcon>
                             <ListItemText primary="Bookmarks" />
                         </ListItem>
-                    </List>
-
-                    <Divider />
-                    <List>
-                        <ListSubheader>Search</ListSubheader>
                         <ListItem
                             component={NavLink}
-                            to="/search/top"
+                            to="/search"
                             activeClassName="Mui-selected"
                             onClick={props.onClick}
                         >
                             <ListItemIcon>
-                                <NotificationImportantIcon />
+                                <FindInPageIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Latest Headlines" />
-                        </ListItem>
-                        <ListItem
-                            component={NavLink}
-                            to="/search/all"
-                            activeClassName="Mui-selected"
-                            onClick={props.onClick}
-                        >
-                            <ListItemIcon>
-                                <AllInclusiveIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="All News" />
+                            <ListItemText primary="Search" />
                         </ListItem>
                     </List>
                     <Divider />
