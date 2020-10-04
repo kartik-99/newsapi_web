@@ -85,9 +85,9 @@ const NewsCard = (props) => {
     const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
     const date = `${da} ${mo}, ${ye}`;
 
-    const correctAuthor =
-        /[a-zA-Z]+$/.test(props.newsItem.author) |
-        (props.newsItem.author !== props.newsItem.source.name);
+    const correctAuthor = false;
+    // /[a-zA-Z]+$/.test(props.newsItem.author) |
+    // (props.newsItem.author !== props.newsItem.source.name);
 
     return (
         <Card className={classes.root}>
