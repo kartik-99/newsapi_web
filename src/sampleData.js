@@ -1671,3 +1671,38 @@ export const countryCodes = [
     { value: "ve", label: "Venezuela" },
     { value: "za", label: "South Africa" },
 ];
+
+export const sourcesOptions = sampleSourceRequest.sources.map((source) => {
+    return { value: source.id, label: source.name };
+});
+
+export const langMap = {
+    ar: "Arabic",
+    de: "German",
+    en: "English",
+    es: "Spanish",
+    fr: "French",
+    he: "Hebrew",
+    it: "Italian",
+    nl: "Dutch",
+    no: "Norwegian",
+    pt: "Portuguese",
+    ru: "Russian",
+    se: "Northern Sami",
+    ud: "Urdu",
+    zh: "Chinese",
+};
+
+const lOptions = Object.keys(langMap).map((key) => {
+    return { value: key, label: langMap[key] };
+});
+
+lOptions.unshift({ value: "all", label: "Any Language" });
+
+export const langOptions = lOptions;
+
+export const sortOptions = [
+    { value: "relevancy", label: "Relevancy" },
+    { value: "popularity", label: "Popularity" },
+    { value: "publishedAt", label: "Latest to Oldest" },
+];

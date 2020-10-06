@@ -86,7 +86,36 @@ export default function (state = defaultState, action) {
             return a;
 
         case SET_SEARCH_RESULTS:
-            return {
+            let b = {};
+            if (Object.keys(state.data.search_results.articles).length === 0) {
+                let articlesObject = {
+                    1: action.payload.response.data.articles,
+                };
+                let pages = Math.ceil(
+                    action.payload.response.data.totalResults /
+                        action.payload.response.data.articles.length
+                );
+                let otherPages = [...Array(pages + 1).keys()].splice(2);
+                otherPages.map((p) => {
+                    articlesObject[p] = [];
+                    return null;
+                });
+
+                b = {
+                    ...state,
+                    loading: false,
+                    data: {
+                        ...state.data,
+                        search_results: {
+                            results: action.payload.response.data.totalResults,
+                            articles: articlesObject,
+                        },
+                    },
+                };
+
+                return b;
+            }
+            b = {
                 ...state,
                 loading: false,
                 data: {
@@ -94,13 +123,15 @@ export default function (state = defaultState, action) {
                     search_results: {
                         results: action.payload.response.data.totalResults,
                         articles: {
-                            ...state.search_results.articles,
+                            ...state.data.search_results.articles,
                             [action.payload.page]:
                                 action.payload.response.data.articles,
                         },
                     },
                 },
             };
+
+            return b;
 
         case SET_SOURCES:
             return {

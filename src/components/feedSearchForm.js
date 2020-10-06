@@ -7,11 +7,7 @@ import SortIcon from "@material-ui/icons/Sort";
 import Grid from "@material-ui/core/Grid";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import * as Yup from "yup";
-import {
-    sampleSourceRequest,
-    countryCodes,
-    categoryCodes,
-} from "../sampleData";
+import { sourcesOptions, countryCodes, categoryCodes } from "../sampleData";
 
 const SOURCES = "sources";
 const CATEGORY = "category";
@@ -32,10 +28,6 @@ const filterOptions = [
     { label: "Category", value: CATEGORY },
     { label: "None", value: "" },
 ];
-
-const sourcesOptions = sampleSourceRequest.sources.map((source) => {
-    return { value: source.id, label: source.name };
-});
 
 const FeedSearchForm = (props) => {
     const [toggleFilters, setToggleFilters] = useState(false);

@@ -3,6 +3,8 @@ import TextInput from "./textInput";
 import ChipIn from "./chipInput";
 import RadioInput from "./radioInput";
 import MultiSelectInput from "./multiselectInput";
+import MultiQuery from "./multiQueryInput";
+import DatePicker from "./datePicker";
 
 const FormikControl = (props) => {
     const { label, ...rest } = props;
@@ -16,6 +18,10 @@ const FormikControl = (props) => {
 
         case "multiSelect":
             return <MultiSelectInput {...rest} />;
+        case "multiQuery":
+            return <MultiQuery {...rest} />;
+        case "pickdate":
+            return <DatePicker {...rest} />;
         default:
             return;
     }

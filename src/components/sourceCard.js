@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import ForwardIcon from "@material-ui/icons/Forward";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-
+import { langMap } from "../sampleData";
 const useStyles = makeStyles((theme) => ({
     root: {
         textAlign: "left",
@@ -59,22 +59,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SourceCard = (props) => {
-    const langMap = {
-        ar: "Arabic",
-        de: "German",
-        en: "English",
-        es: "Spanish",
-        fr: "French",
-        he: "Hebrew",
-        it: "Italian",
-        nl: "Dutch",
-        no: "Norwegian",
-        pt: "Portuguese",
-        ru: "Russian",
-        se: "Northern Sami",
-        ud: "Urdu",
-        zh: "Chinese",
-    };
     const countryMap = {
         ar: "Argentina",
         au: "Australia",

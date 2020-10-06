@@ -27,10 +27,10 @@ class Feed extends Component {
             apiObject.data.sources = "google-news";
         }
         this.state = apiObject;
-        this.changePage = this.changePage.bind(this);
-        this.loadData = this.loadData.bind(this);
-        this.setSearchState = this.setSearchState.bind(this);
-        this.refreshFeed = this.refreshFeed.bind(this);
+        // this.changePage = this.changePage.bind(this);
+        // this.loadData = this.loadData.bind(this);
+        // this.setSearchState = this.setSearchState.bind(this);
+        // this.refreshFeed = this.refreshFeed.bind(this);
     }
     componentDidMount() {
         if (this.state.data.sources !== "") {
@@ -44,7 +44,7 @@ class Feed extends Component {
         this.props.makeApiCall(this.state);
     };
 
-    changePage(pageNo) {
+    changePage = (pageNo) => {
         this.props.resetError();
         this.setState(
             {
@@ -61,9 +61,9 @@ class Feed extends Component {
                 }
             }
         );
-    }
+    };
 
-    setSearchState(apiObject) {
+    setSearchState = (apiObject) => {
         this.props.resetFeed();
         if (apiObject.data.sources === "all") {
             delete apiObject.data.sources;
@@ -72,9 +72,9 @@ class Feed extends Component {
         this.setState(apiObject, () => {
             this.loadData();
         });
-    }
+    };
 
-    refreshFeed() {
+    refreshFeed = () => {
         this.props.resetFeed();
         const apiObject = {
             url: "/top-headlines",
@@ -96,7 +96,7 @@ class Feed extends Component {
         this.setState(apiObject, () => {
             this.loadData();
         });
-    }
+    };
 
     render() {
         return (
