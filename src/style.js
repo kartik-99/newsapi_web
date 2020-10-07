@@ -35,6 +35,18 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
+    box: {
+        border: "1px",
+        borderStyle: "solid",
+        borderRadius: "5px",
+        borderColor: "#000",
+        padding: "1px",
+        backgroundColor: "#fff",
+    },
+    expand: {
+        height: "100%",
+        width: "100%",
+    },
 }));
 
 export default useStyles;

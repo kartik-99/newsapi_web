@@ -12,7 +12,7 @@ const ChipIn = (props) => {
                     <div>
                         <label htmlFor={props.name}>{props.title}</label>
                         <ChipInput
-                            label={props.placeholder}
+                            placeholder={props.placeholder}
                             onChange={(a) => (field.value.q = a)}
                             fullWidth
                             dataSource={props.dataSource}
