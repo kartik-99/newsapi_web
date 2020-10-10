@@ -5,6 +5,7 @@ import NewsGrid from "../components/newsGrid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { makeApiCall, setLoading, resetError, resetSearch } from "../actions";
+import { Typography } from "@material-ui/core";
 
 class Search extends Component {
     constructor(props) {
@@ -12,6 +13,10 @@ class Search extends Component {
         this.setState({
             url: "/everything",
         });
+    }
+
+    componentDidMount() {
+        this.props.resetError();
     }
 
     onSubmit = (apiObject) => {
@@ -62,10 +67,22 @@ class Search extends Component {
                                     onSubmit={this.onSubmit}
                                 />
                             </Grid>
-
                             <Grid item style={{ paddingTop: "5%" }}>
-                                {this.props.data.data.search_results.results >
+                                {this.props.data.data.search_results.results !==
                                     0 && (
+                                    <Typography>
+                                        Results :{" "}
+                                        {this.props.data.data.search_results.results
+                                            .toString()
+                                            .replace(
+                                                /\B(?=(\d{3})+(?!\d))/g,
+                                                ","
+                                            )}
+                                    </Typography>
+                                )}
+                            </Grid>
+                            <Grid item style={{ paddingTop: "5%" }}>
+                                {this.state !== null && (
                                     <NewsGrid
                                         totalPages={
                                             this.props.data.data.search_results

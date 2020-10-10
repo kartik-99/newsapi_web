@@ -1,9 +1,10 @@
 import React from "react";
-import DateView from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TextField from "@material-ui/core/TextField";
 import { Field, ErrorMessage } from "formik";
 import useStyles from "../style";
+import TextError from "./textError";
+
 const DatePicker = (props) => {
     const { title, name, ...rest } = props;
     const classes = useStyles();
@@ -16,6 +17,7 @@ const DatePicker = (props) => {
                     return (
                         <TextField
                             id={name}
+                            name={name}
                             {...field}
                             {...rest}
                             label={title}
@@ -29,32 +31,9 @@ const DatePicker = (props) => {
                     );
                 }}
             </Field>
-            <ErrorMessage name={name} />
+            <ErrorMessage name={name} component={TextError} />
         </div>
     );
 };
 
 export default DatePicker;
-
-// return (
-//     <div>
-//         <label htmlFor={name}>{title}</label>
-//         <Field name={name}>
-//             {({ form, field }) => {
-//                 const { setFieldValue } = form;
-//                 const { value } = field;
-//                 return (
-//                     <DateView
-//                         id={name}
-//                         {...field}
-//                         {...rest}
-//                         selected={value}
-//                         onChange={(val) => setFieldValue(name, val)}
-//                         className={classes.expand}
-//                     />
-//                 );
-//             }}
-//         </Field>
-//         <ErrorMessage name={name} />
-//     </div>
-// );

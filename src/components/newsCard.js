@@ -60,7 +60,7 @@ const showContentOrNot = (news) => {
     if (news.description === null) {
         return true;
     }
-    let a = news.description.split(".")[0];
+    let a = news.description.split(",")[0];
     if (news.content === null) {
         return false;
     }

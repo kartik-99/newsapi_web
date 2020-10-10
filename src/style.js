@@ -47,6 +47,16 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
         width: "100%",
     },
+    dateExpand: {
+        display: "flex",
+        flexGrow: 1,
+        height: "100%",
+        position: "relative",
+        width: "100%",
+    },
+    error: {
+        color: "red",
+    },
 }));
 
 export default useStyles;

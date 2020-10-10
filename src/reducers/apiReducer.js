@@ -171,6 +171,9 @@ export default function (state = defaultState, action) {
             let error = "";
             if (action.payload.message !== undefined) {
                 error = action.payload.message;
+                if (error === "invalid array length") {
+                    error = "No Results Found!";
+                }
             } else if (action.payload.response.status !== undefined) {
                 status = action.payload.response.status;
                 switch (status) {

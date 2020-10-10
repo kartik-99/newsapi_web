@@ -8,6 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import * as Yup from "yup";
 import { sourcesOptions, countryCodes, categoryCodes } from "../sampleData";
+import TextError from "./textError";
 
 const SOURCES = "sources";
 const CATEGORY = "category";
@@ -80,7 +81,7 @@ const FeedSearchForm = (props) => {
                     return (
                         <Form>
                             <Grid item container direction="column">
-                                <ErrorMessage name="q" />
+                                <ErrorMessage name="q" component={TextError} />
                                 <Grid container item direction="row">
                                     <Grid
                                         item

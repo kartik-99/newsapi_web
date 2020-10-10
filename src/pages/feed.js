@@ -33,6 +33,7 @@ class Feed extends Component {
         // this.refreshFeed = this.refreshFeed.bind(this);
     }
     componentDidMount() {
+        this.props.resetError();
         if (this.state.data.sources !== "") {
             console.log("calling from componentdidmount");
             this.loadData();

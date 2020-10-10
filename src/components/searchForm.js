@@ -1,23 +1,48 @@
 import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import FormikControl from "./formikControl";
 import { sourcesOptions, langOptions, sortOptions } from "../sampleData";
 import { newObject } from "../components/multiQueryInput";
 import { Grid, Box, Button, IconButton } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
 import useStyles from "../style";
 import Tooltip from "@material-ui/core/Tooltip";
 import SortIcon from "@material-ui/icons/Sort";
+import TextError from "./textError";
 
-const validationSchema = Yup.object({});
 const SIMPLE_QUERY = "SIMPLE_QUERY";
 const ADV_QUERY = "ADV_QUERY";
+const today = new Date();
+const yesterday = new Date(today);
+
+yesterday.setDate(yesterday.getDate() - 1);
+
+today.toDateString();
+yesterday.toDateString();
+const validationSchema = Yup.object().shape({
+    qType: Yup.string().required(),
+    sq: Yup.array().when("qType", {
+        is: SIMPLE_QUERY,
+        then: Yup.array().min(1, "Enter at least 1 keyword to be searched!"),
+    }),
+    startDate: Yup.date().max(
+        yesterday,
+        "Start date cannot be today or later!"
+    ),
+    endDate: Yup.date().when("startDate", {
+        is: undefined,
+        then: Yup.date().max(today, "End date cannot be after today!"),
+        otherwise: Yup.date()
+            .min(Yup.ref("startDate"), "End Date cannot be before Start Date!")
+            .max(today, "End date cannot be after today!"),
+    }),
+    sources: Yup.array().max(20, "Only a max of 20 sources can be selected!"),
+});
 
 const initialValues = {
     qType: SIMPLE_QUERY,
     aq: [newObject],
-    sq: "",
+    sq: [],
 };
 
 const qOptions = [
@@ -43,10 +68,10 @@ const SearchForm = (props) => {
         }
         if (showFilters) {
             if (values.startDate) {
-                apiObject.data.startDate = values.startDate;
+                apiObject.data.from = values.startDate;
             }
             if (values.endDate) {
-                apiObject.data.endDate = values.endDate;
+                apiObject.data.to = values.endDate;
             }
             if (values.sources) {
                 apiObject.data.sources = values.sources
@@ -67,7 +92,7 @@ const SearchForm = (props) => {
         }
         console.log(apiObject);
         values = initialValues;
-        // props.onSubmit(apiObject);
+        props.onSubmit(apiObject);
     };
     return (
         <div>
@@ -107,6 +132,10 @@ const SearchForm = (props) => {
                                                 name={"sq"}
                                             />
                                         </Box>
+                                        <ErrorMessage
+                                            component={TextError}
+                                            name={"sq"}
+                                        />
                                     </Grid>
                                 )}
                                 {/* {console.log(pro.values)} */}
@@ -136,6 +165,10 @@ const SearchForm = (props) => {
                                                     name={"sources"}
                                                     title="Select Sources..."
                                                 />
+                                                <ErrorMessage
+                                                    component={TextError}
+                                                    name={"sources"}
+                                                />
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
                                                 <Tooltip
@@ -161,7 +194,14 @@ const SearchForm = (props) => {
                                             xs={12}
                                             spacing={2}
                                         >
-                                            <Grid item xs={12} sm={6}>
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                sm={6}
+                                                style={{
+                                                    backgroundColor: "#fff",
+                                                }}
+                                            >
                                                 <FormikControl
                                                     label={"pickdate"}
                                                     name="startDate"
