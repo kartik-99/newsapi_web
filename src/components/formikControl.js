@@ -12,7 +12,7 @@ const FormikControl = (props) => {
         case "text":
             return <TextInput />;
         case "chiptext":
-            return <ChipIn placeholder={props.placeholder} fullWidth />;
+            return <ChipIn {...rest} />;
         case "radio":
             return <RadioInput {...rest} />;
 

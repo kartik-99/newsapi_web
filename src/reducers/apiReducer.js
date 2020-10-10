@@ -168,46 +168,41 @@ export default function (state = defaultState, action) {
 
         case SET_ERROR:
             let status = 0;
-            let e1 =
-                action.payload.message === undefined
-                    ? action.payload.message
-                    : " ";
             let error = "";
-            if (action.payload.message === "Network Error") {
-                status = 1;
-            } else {
+            if (action.payload.message !== undefined) {
+                error = action.payload.message;
+            } else if (action.payload.response.status !== undefined) {
                 status = action.payload.response.status;
+                switch (status) {
+                    case 200:
+                        error = "OK. The request was executed successfully.";
+                        break;
+                    case 400:
+                        error =
+                            "Bad Request. The request was unacceptable, often due to a missing or misconfigured parameter.";
+                        break;
+                    case 401:
+                        error =
+                            "Unauthorized. Your API key was missing from the request, or wasn't correct.";
+                        break;
+                    case 429:
+                        error =
+                            "Too Many Requests. You made too many requests within a window of time and have been rate limited. Back off for a while.";
+                        break;
+                    case 500:
+                        error =
+                            "Server Error. Something went wrong on our side.";
+                        break;
+                    default:
+                        error = "Unknown Error !";
+                }
+            } else {
+                error = "Unknown Error!";
             }
-            switch (status) {
-                case 1:
-                    error = "Network Issue!";
-                    break;
-                case 200:
-                    error = "OK. The request was executed successfully.";
-                    break;
-                case 400:
-                    error =
-                        "Bad Request. The request was unacceptable, often due to a missing or misconfigured parameter.";
-                    break;
-                case 401:
-                    error =
-                        "Unauthorized. Your API key was missing from the request, or wasn't correct.";
-                    break;
-                case 429:
-                    error =
-                        "Too Many Requests. You made too many requests within a window of time and have been rate limited. Back off for a while.";
-                    break;
-                case 500:
-                    error = "Server Error. Something went wrong on our side.";
-                    break;
-                default:
-                    error = "Unknown Error !";
-            }
-
             return {
                 ...state,
                 loading: false,
-                error: e1.concat(error),
+                error: error,
             };
         case RESET_ERROR:
             return {
