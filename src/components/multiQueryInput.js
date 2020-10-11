@@ -1,100 +1,125 @@
 import React from "react";
-import { FieldArray } from "formik";
-import FormikControl from "./formikControl";
-import ToggleButton from "@material-ui/lab/ToggleButton";
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import TitleIcon from "@material-ui/icons/Title";
-import Tooltip from "@material-ui/core/Tooltip";
-import NotInterestedIcon from "@material-ui/icons/NotInterested";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import { IconButton } from "@material-ui/core";
+import { FieldArray, Field } from "formik";
+import { IconButton, Checkbox } from "@material-ui/core";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
-
-// Here is an example of a form with an editable list.
-// Next to each input are buttons for insert and remove.
-// If the list is empty, there is a button to add an item.
+import { Grid } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import Select from "react-select";
+import { CustomErrorMessage } from "./textError";
 export const newObject = {
     iq: "",
     exact: false,
     title: false,
-    mustAppear: false,
-    mustNotAppear: false,
+    appear: { label: "May/May not appear", value: "normal" },
 };
+
+export const appear = [
+    { label: "May/May not appear", value: "normal" },
+    { label: "Must Appear", value: "mustAppear" },
+    { label: "Must Not Appear", value: "mustNotAppear" },
+];
 const MultiQuery = (props) => {
     return (
-        <div>
-            <FieldArray name={props.name}>
-                {(arrayHelpers) => (
+        <FieldArray name={props.name} enableReinitialize>
+            {(arrayHelpers) => {
+                return (
                     <div>
                         {props.values.map((query, index) => (
-                            <div key={index}>
-                                {/** both these conventions do the same */}
-                                <FormikControl
-                                    label="text"
-                                    title="Enter Search Query"
-                                    name={`query.iq`}
-                                />
-                                <Tooltip title="Must be Exact Match" arrow>
-                                    <ToggleButton
-                                        selected={query.exact}
-                                        size="small"
-                                        name={`aq[${index}].exact`}
-                                        onChange={() => {
-                                            query.exact = !query.exact;
-                                        }}
-                                    >
-                                        ==
-                                    </ToggleButton>
-                                </Tooltip>
-                                <Tooltip title="Must be in title" arrow>
-                                    <ToggleButton
-                                        size="small"
-                                        selected={query.title}
-                                        name={`aq[${index}].title`}
-                                    >
-                                        <TitleIcon fontSize="small" />
-                                    </ToggleButton>
-                                </Tooltip>
-
-                                <ToggleButtonGroup exclusive>
-                                    <Tooltip title="Must Appear" arrow>
-                                        <ToggleButton
-                                            size="small"
-                                            selected={query.mustAppear}
-                                            name={`aq[${index}].mustAppear`}
-                                        >
-                                            <CheckCircleIcon size="small" />
-                                        </ToggleButton>
-                                    </Tooltip>
-                                    <Tooltip title="Must not Appear" arrow>
-                                        <ToggleButton
-                                            size="small"
-                                            selected={query.mustNotAppear}
-                                            name={`aq[${index}].mustNotAppear`}
-                                        >
-                                            <NotInterestedIcon size="small" />
-                                        </ToggleButton>
-                                    </Tooltip>
-                                </ToggleButtonGroup>
-
-                                <IconButton
-                                    size="small"
-                                    onClick={() => arrayHelpers.remove(index)}
+                            <React.Fragment>
+                                <Grid
+                                    item
+                                    container
+                                    direction="row"
+                                    key={index}
+                                    spacing={2}
+                                    // style={{ paddingTop: "1%" }}
                                 >
-                                    <RemoveIcon size="small" />
-                                </IconButton>
-                            </div>
+                                    <Grid item xs={12} sm={3}>
+                                        <Field
+                                            component={TextField}
+                                            label="Enter Search Query"
+                                            variant="outlined"
+                                            size="small"
+                                            fullWidth={true}
+                                            name={`${props.name}[${index}].iq`}
+                                            onChange={(a) => {
+                                                props.values[index].iq =
+                                                    a.target.value;
+                                            }}
+                                        />
+                                        <CustomErrorMessage
+                                            name={`${props.name}[${index}].iq`}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={3}>
+                                        <Select
+                                            options={appear}
+                                            isMulti={false}
+                                            isSearchable={false}
+                                            defaultValue={{
+                                                label: "May/May not appear",
+                                                value: "normal",
+                                            }}
+                                            onChange={(a) => {
+                                                props.values[index].appear = a;
+                                            }}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={5} sm={2}>
+                                        <Field
+                                            component={Checkbox}
+                                            name={`${props.name}[${index}].title`}
+                                            onChange={() => {
+                                                props.values[
+                                                    index
+                                                ].title = !props.values[index]
+                                                    .title;
+                                            }}
+                                        />
+                                        In Title
+                                    </Grid>
+                                    <Grid item xs={5} sm={2}>
+                                        <Field
+                                            component={Checkbox}
+                                            name={`${props.name}[${index}].exact`}
+                                            onChange={() => {
+                                                props.values[
+                                                    index
+                                                ].exact = !props.values[index]
+                                                    .exact;
+                                            }}
+                                        />
+                                        Exact
+                                    </Grid>
+                                    {props.values.length > 1 && (
+                                        <Grid item xs={1}>
+                                            <IconButton
+                                                type="button"
+                                                onClick={() =>
+                                                    arrayHelpers.remove(index)
+                                                }
+                                            >
+                                                <RemoveIcon />
+                                            </IconButton>
+                                        </Grid>
+                                    )}
+                                    <Grid item xs={1}>
+                                        <IconButton
+                                            onClick={() =>
+                                                arrayHelpers.push(newObject)
+                                            }
+                                        >
+                                            <AddIcon />
+                                        </IconButton>
+                                    </Grid>
+                                </Grid>
+                            </React.Fragment>
                         ))}
-                        <IconButton
-                            onClick={() => arrayHelpers.push(newObject)}
-                        >
-                            <AddIcon />
-                        </IconButton>
                     </div>
-                )}
-            </FieldArray>
-        </div>
+                );
+            }}
+        </FieldArray>
     );
 };
 

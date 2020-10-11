@@ -25,6 +25,11 @@ const validationSchema = Yup.object().shape({
         is: SIMPLE_QUERY,
         then: Yup.array().min(1, "Enter at least 1 keyword to be searched!"),
     }),
+    aq: Yup.array().of(
+        Yup.object().shape({
+            iq: Yup.string().required("Empty!"),
+        })
+    ),
     startDate: Yup.date().max(
         yesterday,
         "Start date cannot be today or later!"
@@ -36,7 +41,7 @@ const validationSchema = Yup.object().shape({
             .min(Yup.ref("startDate"), "End Date cannot be before Start Date!")
             .max(today, "End date cannot be after today!"),
     }),
-    sources: Yup.array().max(20, "Only a max of 20 sources can be selected!"),
+    sources: Yup.array().max(20, "A max of only 20 sources can be selected!"),
 });
 
 const initialValues = {
@@ -65,6 +70,32 @@ const SearchForm = (props) => {
         };
         if (values.qType === SIMPLE_QUERY) {
             apiObject.data.q = values.sq.join(",");
+        } else {
+            let q = [];
+            let qInTitle = [];
+            values.aq.map((query) => {
+                let temp = query.iq;
+                if (query.exact) {
+                    temp = '"' + query.iq + '"';
+                }
+                if (query.appear.value === "mustAppear") {
+                    temp = "+" + temp;
+                } else if (query.appear.value === "mustNotAppear") {
+                    temp = "-" + temp;
+                }
+                if (query.title) {
+                    qInTitle.push(temp);
+                } else {
+                    q.push(temp);
+                }
+            });
+            if (q.length) {
+                apiObject.data.q = q.join(",");
+            }
+
+            if (qInTitle.length) {
+                apiObject.data.qInTitle = qInTitle.join(",");
+            }
         }
         if (showFilters) {
             if (values.startDate) {
@@ -146,6 +177,10 @@ const SearchForm = (props) => {
                                             values={pro.values.aq}
                                             name="aq"
                                         />
+                                        {/* <ErrorMessage
+                                            component={TextError}
+                                            name={"aq"}
+                                        /> */}
                                     </Grid>
                                 )}
                                 {showFilters && (

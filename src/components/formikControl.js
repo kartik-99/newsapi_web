@@ -10,12 +10,11 @@ const FormikControl = (props) => {
     const { label, ...rest } = props;
     switch (label) {
         case "text":
-            return <TextInput />;
+            return <TextInput {...props} />;
         case "chiptext":
             return <ChipIn {...rest} />;
         case "radio":
             return <RadioInput {...rest} />;
-
         case "multiSelect":
             return <MultiSelectInput {...rest} />;
         case "multiQuery":

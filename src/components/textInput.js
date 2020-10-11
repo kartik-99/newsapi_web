@@ -15,7 +15,9 @@ const TextInput = (props) => {
                             label={props.title}
                             placeholder={props.title}
                             variant="outlined"
-                            onChange={(a) => (field.value.q = a.target.value)}
+                            onChange={(a) =>
+                                (field.value[props.name] = a.target.value)
+                            }
                             size="small"
                             fullWidth={true}
                         />

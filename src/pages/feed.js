@@ -92,7 +92,7 @@ class Feed extends Component {
                 })
                 .join(",");
         } else {
-            apiObject.data.sources = "google-news";
+            apiObject.data.sources = "google-news-in";
         }
         this.setState(apiObject, () => {
             this.loadData();
