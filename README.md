@@ -1,68 +1,42 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# News SPA
 
-## Available Scripts
+This project is a simple front-end implementation, powered by [The NewsApi](https://newsapi.org/).
 
-In the project directory, you can run:
+## Available Pages
 
-### `yarn start`
+In this SPA, we have the following pages:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### `Feed`
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+This page shows the latest headlines from your favourite news channels.
+In case there are no favourite news sources selected, it shows the latest headlines from Google News
+You also have the option to search the latest headlines with a few filters
 
-### `yarn test`
+### `Bookmarks`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Shows the news articles you have bookmarked
 
-### `yarn build`
+### `Search`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Can search for any news articles with multiple keywords,
+with multiple filters on each keyword (in advanced queries option)
+Also has additional filters such as language, custom domain search etc
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### `All Sources`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Shows the news sources that the api provides
+One can add favourites from here, as well as visit the new site with a click
 
-### `yarn eject`
+### `Favourite Sources`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Shows the list of favourite sources
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Frameworks used :
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+1. React
+2. Redux
+3. React-Router
+4. Material-ui
+5. Axios
+6. Formik
+7. Yup
