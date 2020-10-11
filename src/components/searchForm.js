@@ -177,10 +177,6 @@ const SearchForm = (props) => {
                                             values={pro.values.aq}
                                             name="aq"
                                         />
-                                        {/* <ErrorMessage
-                                            component={TextError}
-                                            name={"aq"}
-                                        /> */}
                                     </Grid>
                                 )}
                                 {showFilters && (

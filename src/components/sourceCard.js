@@ -106,7 +106,13 @@ const SourceCard = (props) => {
                 style={{ height: "100%" }}
             >
                 <Grid container direction="row" className={classes.gridRoot}>
-                    <Grid item className={classes.gridRoot}>
+                    <Grid
+                        item
+                        className={classes.gridRoot}
+                        onClick={() => {
+                            window.open(props.sourceItem.url, "_blank").focus();
+                        }}
+                    >
                         <Typography variant="h6" className={classes.bold}>
                             {props.sourceItem.name}
                         </Typography>
@@ -125,22 +131,24 @@ const SourceCard = (props) => {
                             )}
                         </IconButton>
                     </Grid>
-                    <Grid item>
-                        <IconButton>
-                            <ForwardIcon />
-                        </IconButton>
-                    </Grid>
                 </Grid>
                 <Typography
                     variant="body2"
-                    // color="textSecondary"
                     component="p"
                     style={{ height: "60%" }}
-                    // className={classes.littlePadding}
+                    onClick={() => {
+                        window.open(props.sourceItem.url, "_blank").focus();
+                    }}
                 >
                     {props.sourceItem.description}
                 </Typography>
-                <Grid container direction="row">
+                <Grid
+                    container
+                    direction="row"
+                    onClick={() => {
+                        window.open(props.sourceItem.url, "_blank").focus();
+                    }}
+                >
                     <Grid item>
                         <Chip
                             color="primary"

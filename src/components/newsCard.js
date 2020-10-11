@@ -96,8 +96,15 @@ const NewsCard = (props) => {
                 alt=""
                 backgroundimage={"../../public/no_image.jpg"}
                 width="100%"
+                onClick={() => {
+                    window.open(props.newsItem.url, "_blank").focus();
+                }}
             />
-            <CardContent>
+            <CardContent
+                onClick={() => {
+                    window.open(props.newsItem.url, "_blank").focus();
+                }}
+            >
                 <Typography variant="h6" className={classes.bold}>
                     {props.newsItem.title}
                 </Typography>
@@ -149,9 +156,6 @@ const NewsCard = (props) => {
                         <BookmarkIcon />
                     )}
                 </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
                 {showContent && (
                     <IconButton
                         className={clsx(classes.expand, {
@@ -167,7 +171,11 @@ const NewsCard = (props) => {
             </CardActions>
             {showContent && (
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
+                    <CardContent
+                        onClick={() => {
+                            window.open(props.newsItem.url, "_blank").focus();
+                        }}
+                    >
                         <Typography
                             variant="body2"
                             color="textSecondary"
