@@ -1,14 +1,16 @@
 import React from "react";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import useStyles from "./style";
-import ListSubheader from "@material-ui/core/ListSubheader";
+import {
+    Drawer,
+    CssBaseline,
+    Toolbar,
+    List,
+    Divider,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    ListSubheader,
+} from "@material-ui/core";
+import useStyles from "../style";
 
 import ClearAllIcon from "@material-ui/icons/ClearAll"; // feed
 import BookmarksIcon from "@material-ui/icons/Bookmarks"; // bookmarks

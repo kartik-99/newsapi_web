@@ -4,9 +4,8 @@ import * as Yup from "yup";
 import FormikControl from "./formikControl";
 import { sourcesOptions, langOptions, sortOptions } from "../sampleData";
 import { newObject } from "../components/multiQueryInput";
-import { Grid, Box, Button, IconButton } from "@material-ui/core";
+import { Tooltip, Grid, Box, Button, IconButton } from "@material-ui/core";
 import useStyles from "../style";
-import Tooltip from "@material-ui/core/Tooltip";
 import SortIcon from "@material-ui/icons/Sort";
 import TextError from "./textError";
 
@@ -25,11 +24,15 @@ const validationSchema = Yup.object().shape({
         is: SIMPLE_QUERY,
         then: Yup.array().min(1, "Enter at least 1 keyword to be searched!"),
     }),
-    aq: Yup.array().of(
-        Yup.object().shape({
-            iq: Yup.string().required("Empty!"),
-        })
-    ),
+    aq: Yup.array().when("qType", {
+        is: ADV_QUERY,
+        then: Yup.array().of(
+            Yup.object().shape({
+                iq: Yup.string().required("Empty!"),
+            })
+        ),
+        otherwise: Yup.array(),
+    }),
     startDate: Yup.date().max(
         yesterday,
         "Start date cannot be today or later!"

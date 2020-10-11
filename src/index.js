@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Navbar from "./navbar";
-import MasterDrawer from "./drawer";
+import Navbar from "./components/navbar";
+import MasterDrawer from "./components/drawer";
 import Feed from "./pages/feed";
 import Bookmarks from "./pages/bookmarks";
 import Search from "./pages/search";
@@ -13,7 +13,7 @@ import Favourites from "./pages/favourites";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import allData from "./reducers/index";
-import apiMiddleware from "./middleware/apiMiddleware";
+import apiMiddleware from "./apiMiddleware";
 
 const store = createStore(allData, applyMiddleware(apiMiddleware));
 

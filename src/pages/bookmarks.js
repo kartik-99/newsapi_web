@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import NewsGrid from "../components/newsGrid";
-import Grid from "@material-ui/core/Grid";
 
 class Bookmarks extends Component {
     render() {

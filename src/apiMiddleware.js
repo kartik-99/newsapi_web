@@ -5,7 +5,7 @@ import {
     feedSearchResults,
     feedSources,
     feedError,
-} from "../actions";
+} from "./actions";
 
 const apiMiddleware = ({ dispatch }) => (next) => (action) => {
     next(action);

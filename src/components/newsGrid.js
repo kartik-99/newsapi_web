@@ -1,14 +1,11 @@
 import React from "react";
 import NewsCard from "./newsCard";
-import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addBookmark, removeBookmark } from "../actions";
 import Pagination from "@material-ui/lab/Pagination";
-import { Box } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { Typography } from "@material-ui/core";
+import { Typography, Box, Grid, CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     loaderRoot: {

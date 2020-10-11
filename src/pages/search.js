@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
 import SearchForm from "../components/searchForm";
 import NewsGrid from "../components/newsGrid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { makeApiCall, setLoading, resetError, resetSearch } from "../actions";
-import { Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 
 class Search extends Component {
     constructor(props) {

@@ -1,12 +1,12 @@
 import React from "react";
 import { FieldArray, Field } from "formik";
-import { IconButton, Checkbox } from "@material-ui/core";
-import RemoveIcon from "@material-ui/icons/Remove";
-import AddIcon from "@material-ui/icons/Add";
-import { Grid } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
+import { Grid, TextField, IconButton, Checkbox } from "@material-ui/core";
 import Select from "react-select";
 import { CustomErrorMessage } from "./textError";
+
+import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
+
 export const newObject = {
     iq: "",
     exact: false,
@@ -33,7 +33,6 @@ const MultiQuery = (props) => {
                                     direction="row"
                                     key={index}
                                     spacing={2}
-                                    // style={{ paddingTop: "1%" }}
                                 >
                                     <Grid item xs={12} sm={3}>
                                         <Field
@@ -90,7 +89,16 @@ const MultiQuery = (props) => {
                                                     .exact;
                                             }}
                                         />
-                                        Exact
+                                        Exact Match
+                                    </Grid>
+                                    <Grid item xs={1}>
+                                        <IconButton
+                                            onClick={() =>
+                                                arrayHelpers.push(newObject)
+                                            }
+                                        >
+                                            <AddIcon />
+                                        </IconButton>
                                     </Grid>
                                     {props.values.length > 1 && (
                                         <Grid item xs={1}>
@@ -104,15 +112,6 @@ const MultiQuery = (props) => {
                                             </IconButton>
                                         </Grid>
                                     )}
-                                    <Grid item xs={1}>
-                                        <IconButton
-                                            onClick={() =>
-                                                arrayHelpers.push(newObject)
-                                            }
-                                        >
-                                            <AddIcon />
-                                        </IconButton>
-                                    </Grid>
                                 </Grid>
                             </React.Fragment>
                         ))}

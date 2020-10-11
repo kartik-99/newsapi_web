@@ -1,6 +1,5 @@
 import React from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import TextField from "@material-ui/core/TextField";
+import { TextField } from "@material-ui/core";
 import { Field, ErrorMessage } from "formik";
 import useStyles from "../style";
 import TextError from "./textError";
@@ -12,8 +11,6 @@ const DatePicker = (props) => {
         <div>
             <Field name={name}>
                 {({ form, field }) => {
-                    const { setFieldValue } = form;
-                    const { value } = field;
                     return (
                         <TextField
                             id={name}

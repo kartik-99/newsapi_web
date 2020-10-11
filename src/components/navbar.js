@@ -1,12 +1,14 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import useStyles from "./style";
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    IconButton,
+    useScrollTrigger,
+} from "@material-ui/core";
+import useStyles from "../style";
 import PropTypes from "prop-types";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import MenuIcon from "@material-ui/icons/Menu";
 
 function ElevationScroll(props) {
     const { children, window } = props;

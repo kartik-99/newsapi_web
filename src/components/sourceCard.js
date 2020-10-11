@@ -1,14 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Chip from "@material-ui/core/Chip";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import ForwardIcon from "@material-ui/icons/Forward";
+import {
+    CardContent,
+    Typography,
+    Chip,
+    Grid,
+    IconButton,
+    Card,
+} from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { langMap } from "../sampleData";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         textAlign: "left",

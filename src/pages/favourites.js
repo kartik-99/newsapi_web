@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import SourceGrid from "../components/sourceGrid";
-import Grid from "@material-ui/core/Grid";
 
 class Favourites extends Component {
     render() {
