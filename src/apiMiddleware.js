@@ -15,6 +15,7 @@ const apiMiddleware = ({ dispatch }) => (next) => (action) => {
 
     axios.defaults.baseURL = "http://newsapi.org/v2/";
     axios.defaults.headers.common["Content-Type"] = "application/json";
+    axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
     axios.defaults.headers.common["X-Api-Key"] =
         "bdba5de1b490495796a1595f77ed3f37";
 

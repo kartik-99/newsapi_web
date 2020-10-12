@@ -76,7 +76,7 @@ const SearchForm = (props) => {
         } else {
             let q = [];
             let qInTitle = [];
-            values.aq.map((query) => {
+            values.aq.forEach((query) => {
                 let temp = query.iq;
                 if (query.exact) {
                     temp = '"' + query.iq + '"';
