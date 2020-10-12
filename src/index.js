@@ -61,7 +61,7 @@ class Root extends React.Component {
                             <Sources />
                         </Route>
                         <Route path="/">
-                            <Sources />
+                            <Feed />
                         </Route>
                     </Switch>
                 </Provider>
